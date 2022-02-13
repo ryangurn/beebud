@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -58,4 +59,18 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * The accessor/mutator that will get and set the
+     * name capitalization to the proper formatting.
+     *
+     * @return Attribute
+     */
+    protected function name(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => ucwords($value)
+        );
+    }
 }
